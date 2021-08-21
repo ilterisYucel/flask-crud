@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head>
+    <style>
+      #books {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      #books td, #books th, #books button {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      #books button{
+        box-sizing: border-box;
+        width: 100%;
+      }
+      #books tr:nth-child(even){background-color: #f2f2f2;}
+      
+      #books tr:hover {background-color: #ddd;}
+      
+      #books th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+      }
+      form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+        box-sizing: border-box;
+      }
+
+      form.example button, #addButton{
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #04AA6D;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+      }
+      #allButton{
+        width: 20%;
+        padding: 10px;
+        background: #04AA6D;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin-bottom: 16px;        
+      } 
+      </style>
+
+   </head>
+   <body>
+    <button id="allButton" onclick="window.location.href='/all'">See All</button>
+      <!--<h2><a href = "{{ url_for('show_all', kw='all') }}">See All</a></h2>-->
+
+      <form class="example" method="POST" action="/search">
+      <input type="text" placeholder="Search.." name="search">
+      <button type="submit">SEARCH</button>
+      </form>
+      <hr>
+      <button id="addButton" onclick="window.location.href='/upload'">Add Book</button>
+      
+      <table id="books"> 
+         <thead>
+            <tr>
+               <th>Name</th>
+               <th>İmage</th>
+               <th>Author</th>
+               <th>Publish Date</th>
+               <th>Image Min</th>
+               <th>Image Max</th>
+               <th>Image Mean</th>
+               <th>Image Std</th>
+               <th></th>
+               <th></th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for book in books %}
+               <tr>
+                  <td>{{ book.name }}</td>
+                  <td><img src="{{ book.img }}" alt="thumbnail"></td>
+                  <td>{{ book.author }}</td>
+                  <td>{{ book.release_date }}</td>
+                  <td>{{ book.min }}</td>
+                  <td>{{ book.max }}</td>
+                  <td>{{ book.mean }}</td>
+                  <td>{{ book.std }}</td>
+                  <td><button onclick="window.location.href='/delete/{{book.id}}'">DELETE</button></td>
+                  <td><button onclick="window.location.href='/update/{{book.id}}'">UPDATE</button></td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </body>
+</html>
